@@ -7,19 +7,63 @@
       body {
         margin: 0;
         overflow: hidden;
+        background-color: black;
+        color: white;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
       }
       canvas {
         display: block;
       }
-      h1 {
+      .btn {
+        border: none;
+        font-size: 30px;
+      }
+      #userInput {
+        border: none;
+        background-color: transparent;
+        font-size: 30px;
+      }
+      #inputSection {
+        position: absolute;
+        bottom: 50px;
         text-align: center;
-        margin: 10px;
+        background-color: #f1f3f5;
+        padding: 10px;
+        border-radius: 20px;
+        opacity: 0.6;
+      }
+      .floating-text {
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        animation: floatUp 5s forwards;
+        color: white;
+        font-size: 24px;
+      }
+      @keyframes floatUp {
+        0% {
+          bottom: 0;
+          opacity: 1;
+        }
+        100% {
+          bottom: 100%;
+          opacity: 0;
+        }
       }
     </style>
   </head>
   <body>
-    <h1>성이현</h1>
-    <canvas id="cw"/>
+    <div id="inputSection">
+      <input type="text" id="userInput" placeholder="👸성이현👸"  />
+      <button class='btn' onclick="submitText()">📩</button>
+      <button class='btn' onclick="removeUserInput()">🧹</button>
+    </div>
+    <canvas id="cw"></canvas>
     <script type="application/javascript">
       const canvas = document.getElementById("cw");
       const context = canvas.getContext("2d");
@@ -130,6 +174,28 @@
       });
 
       window.addEventListener("resize", setSize);
+
+      function removeUserInput(){
+        document.getElementById('userInput').value = '';
+      }
+
+      function submitText() {
+        const input = document.getElementById('userInput').value;
+        if (input) {
+          const textElement = document.createElement('div');
+          textElement.className = 'floating-text';
+          textElement.textContent = input;
+          document.body.appendChild(textElement);
+
+          // 애니메이션이 끝나면 요소를 제거
+          textElement.addEventListener('animationend', () => {
+            textElement.remove();
+          });
+
+          // 인풋 창 초기화
+          // document.getElementById('userInput').value = '';
+        }
+      }
     </script>
   </body>
 </html>
