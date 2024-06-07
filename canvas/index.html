@@ -34,7 +34,6 @@
         background-color: #f1f3f5;
         padding: 10px;
         border-radius: 20px;
-        opacity: 0.6;
       }
       .floating-text {
         position: absolute;
@@ -181,20 +180,14 @@
 
       function submitText() {
         const input = document.getElementById('userInput').value;
-        if (input) {
-          const textElement = document.createElement('div');
-          textElement.className = 'floating-text';
-          textElement.textContent = input;
-          document.body.appendChild(textElement);
-
-          // 애니메이션이 끝나면 요소를 제거
-          textElement.addEventListener('animationend', () => {
-            textElement.remove();
-          });
-
-          // 인풋 창 초기화
-          // document.getElementById('userInput').value = '';
-        }
+        const textElement = document.createElement('div');
+        textElement.className = 'floating-text';
+        textElement.textContent = input && input.length ? input : "👸성이현👸";
+        document.body.appendChild(textElement);
+        // 애니메이션이 끝나면 요소를 제거
+        textElement.addEventListener('animationend', () => {
+          textElement.remove();
+        });
       }
     </script>
   </body>
